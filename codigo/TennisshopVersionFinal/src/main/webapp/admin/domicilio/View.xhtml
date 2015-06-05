@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DomicilioViewDlg" widgetVar="DomicilioViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDomicilioTitle}">
+            <h:form id="DomicilioViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{domicilioController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDomicilioLabel_idDOMICILIO}"/>
+                        <h:outputText value="#{domicilioController.selected.idDOMICILIO}" title="#{bundle.ViewDomicilioTitle_idDOMICILIO}"/>
+                        <h:outputText value="#{bundle.ViewDomicilioLabel_dirrecion}"/>
+                        <h:outputText value="#{domicilioController.selected.dirrecion}" title="#{bundle.ViewDomicilioTitle_dirrecion}"/>
+                        <h:outputText value="#{bundle.ViewDomicilioLabel_telefono}"/>
+                        <h:outputText value="#{domicilioController.selected.telefono}" title="#{bundle.ViewDomicilioTitle_telefono}"/>
+                        <h:outputText value="#{bundle.ViewDomicilioLabel_localidad}"/>
+                        <h:outputText value="#{domicilioController.selected.localidad}" title="#{bundle.ViewDomicilioTitle_localidad}"/>
+                        <h:outputText value="#{bundle.ViewDomicilioLabel_barrio}"/>
+                        <h:outputText value="#{domicilioController.selected.barrio}" title="#{bundle.ViewDomicilioTitle_barrio}"/>
+                        <h:outputText value="#{bundle.ViewDomicilioLabel_MUNICIPIOidMUNICIPIO}"/>
+                        <h:outputText value="#{domicilioController.selected.MUNICIPIOidMUNICIPIO}" title="#{bundle.ViewDomicilioTitle_MUNICIPIOidMUNICIPIO}"/>
+                        <h:outputText value="#{bundle.ViewDomicilioLabel_cuenta}"/>
+                        <h:outputText value="#{domicilioController.selected.cuenta}" title="#{bundle.ViewDomicilioTitle_cuenta}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DomicilioViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

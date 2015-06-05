@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProveedorEditDlg" widgetVar="ProveedorEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditProveedorTitle}">
+            <h:form id="ProveedorEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{proveedorController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditProveedorLabel_proveedorPK_tipoDocumento}" for="proveedorPK_tipoDocumento" />
+                        <p:inputText id="proveedorPK_tipoDocumento" value="#{proveedorController.selected.proveedorPK.tipoDocumento}" title="#{bundle.EditProveedorTitle_proveedorPK_tipoDocumento}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_proveedorPK_tipoDocumento}"/>
+                        <p:outputLabel value="#{bundle.EditProveedorLabel_proveedorPK_numeroDocumento}" for="proveedorPK_numeroDocumento" />
+                        <p:inputText id="proveedorPK_numeroDocumento" value="#{proveedorController.selected.proveedorPK.numeroDocumento}" title="#{bundle.EditProveedorTitle_proveedorPK_numeroDocumento}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_proveedorPK_numeroDocumento}"/>
+                        <p:outputLabel value="#{bundle.EditProveedorLabel_nombreProvvedor}" for="nombreProvvedor" />
+                        <p:inputText id="nombreProvvedor" value="#{proveedorController.selected.nombreProvvedor}" title="#{bundle.EditProveedorTitle_nombreProvvedor}" />
+                        <p:outputLabel value="#{bundle.EditProveedorLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{proveedorController.selected.telefono}" title="#{bundle.EditProveedorTitle_telefono}" />
+                        <p:outputLabel value="#{bundle.EditProveedorLabel_correo}" for="correo" />
+                        <p:inputText id="correo" value="#{proveedorController.selected.correo}" title="#{bundle.EditProveedorTitle_correo}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{proveedorController.update}" value="#{bundle.Save}" update="display,:ProveedorListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ProveedorEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ProveedorEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
