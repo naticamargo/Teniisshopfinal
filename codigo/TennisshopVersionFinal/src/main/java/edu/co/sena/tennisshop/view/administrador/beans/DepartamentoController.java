@@ -31,6 +31,7 @@ public class DepartamentoController implements Serializable {
     private Departamento selected;
     private Departamento selectBuscar;
     private Integer idBuscar;
+    private String nombreBuscar;
 
     public DepartamentoController() {
     }
@@ -100,7 +101,20 @@ public class DepartamentoController implements Serializable {
         }
         return items;
     }
+public List<Departamento> buscarPorId() {
+        itemsBuscados = getFacade().finById(idBuscar);
+        nombreBuscar = null;
+        items = null;
+        return itemsBuscados;
+    }
 
+    public List<Departamento> buscarPorNombre() {
+        itemsBuscados = getFacade().findByParteNombre(nombreBuscar);
+        items = null;
+        idBuscar = null;
+        return itemsBuscados;
+    }
+    
     public List<Departamento> getItemsBuscados() {
 
         if (itemsBuscados == getFacade().finById(idBuscar)) {
