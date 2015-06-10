@@ -90,10 +90,105 @@
                     </p:dataTable>
                 </p:panel>
             </h:form>
+            
+            <!--buscar  productos-->
+            <p:panel header="#{bundle.BuscarproductoTitle_Idproducto}" id="panelBusqueda">
+                <p:messages autoUpdate="true"/>
+                <h:panelGroup id="display">
+                    <h:form id="BuscarIdProductoForm">
+                        <p:messages autoUpdate="true" closable="true" for="buscarIdProducto"/>
+                        <h:panelGrid id="grid1" columns="9"  cellspacing="0">
+                            <p:outputLabel value="#{bundle.Buscarproductolabel_Idproducto}" for="buscarIdProducto" />
+                            <p:inputText id="buscarIdProducto" value="#{productoController.idBuscar}" title="#{bundle.BuscarproductoTitle_Idproducto}" required="true" requiredMessage="#{bundle.CreateProductoRequiredMessage_nombreProdcuto}"/>
+                            <p:commandButton id="botonId"  value="#{bundle.Buscar}"
+                                             update=":BuscarProductoListForm,:panelBusqueda" actionListener="#{productoController.buscarPorId()}" />
+                                        
+                            <p:message for="buscarIdProducto" />
+                        </h:panelGrid>
+                    </h:form> 
+                    
+                <h:form id="BuscarNombreProductoForm">
+                <p:messages autoUpdate="true"/>
+                 <p:messages autoUpdate="true" closable="true" for="buscarIdProducto"/>
+                        <h:panelGrid id="grid1" columns="9"  cellspacing="0">
+                            <p:outputLabel value="#{bundle.Buscarproductolabel_nombre}" for="buscarnombre" />
+                            <p:inputText id="buscarnombre" required="true" value="#{productoController.nombreBuscar}"/>
+                            <p:commandButton id="botonNombre"  icon="ui-icon-search"  
+                                             value="#{bundle.Buscar}" 
+                                             update=":BuscarProductoListForm,:panelBusqueda" actionListener="#{productoController.buscarPorNombre()}" />
+                                            
+                            <p:message for="buscarnombre" />
+                        </h:panelGrid>
+               
+                        </h:form>
+                        <!--FormularioProducto de buscar Por ID Categoria -->
+
+                    <h:form id="BuscarIdCategoriaProductoForm">
+                        <p:messages autoUpdate="true" closable="true" for="buscarIdProducto"/>
+                        <h:panelGrid id="grid1" columns="5"  cellspacing="0">
+                            <p:outputLabel for="buscarIdCatPro" value="#{bundle.Buscarproductolabel_IdCategoria}" />
+                            <p:inputText id="buscarIdCatPro" required="true" value="#{productoController.idCategoria}" />
+                            <p:commandButton id="botonIdCatPro" icon="ui-icon-search" 
+                                             value="#{bundle.Buscar}" 
+                                             update=":BuscarProductoListForm,:panelBusqueda" actionListener="#{productoController.buscarPorIdCategoria()}" />
+                                             
+                            <p:message for="buscarIdCatPro" />
+                        </h:panelGrid>
+                       </h:form>
+             </h:panelGroup>
+            </p:panel>
+            <!-- El Resultado De La Busqueda De Productos -->
+            <h:form id="BuscarProductoListForm">
+                <p:panel header="#{bundle.BuscarProductoTitle}" id="panelBuscar">
+                    <p:dataTable id="datalist2" value="#{productoController.itemsBuscados}" var="itemEncontrados"
+                                 selectionMode="single" selection="#{productoController.selectBuscar}"
+                                 paginator="true"
+                                 rowKey="#{itemEncontrados.idProducto}"
+                                 rows="5"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 emptyMessage="#{bundle.BuscarListMessage}"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="viewButtonBuscar2 editButtonBuscar2 deleteButtonBuscar2"/>
+                        <p:ajax event="rowUnselect" update="viewButtonBuscar2 editButtonBuscar2 deleteButtonBuscar2"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_idProducto}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.idProducto}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_nombreProdcuto}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.nombreProdcuto}"/>
+                        </p:column>
+                        
+                          <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_categoriaIdCategoria}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.categoriaIdCategoria.nombre}"/>
+                        </p:column>
+                        <f:facet name="footer">
+
+                            <p:commandButton id="viewButtonBuscar2"   icon="ui-icon-search" value="#{bundle.View}" update=":ProductoViewFormBuscar" oncomplete="PF('ProductoViewDialogBuscar').show()" disabled="#{empty productoController.selectBuscar}"/>
+                            <p:commandButton id="editButtonBuscar2"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ProductoEditFormBuscar" oncomplete="PF('ProductoEditDialogBuscar').show()" disabled="#{empty productoController.selectBuscar}"/>
+                            <p:commandButton id="deleteButtonBuscar2" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{productoController.eliminarBuscado()}" update=":growl,:BuscarProductoListForm, :ProductoListForm:datalist," disabled="#{empty productoController.selectBuscar}"/>
+                        </f:facet>
+                            
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+            
+                    
 
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
+            <ui:include src="ViewBuscar.xhtml"/>
+            <ui:include src="EditBuscar.xhtml"/>
         </ui:define>
     </ui:composition>
 
