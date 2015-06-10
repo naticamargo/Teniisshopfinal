@@ -30,13 +30,13 @@
                         <p:selectOneMenu id="categoriaIdCategoria" value="#{productoController.selected.categoriaIdCategoria}" required="true" requiredMessage="#{bundle.EditProductoRequiredMessage_categoriaIdCategoria}">
                             <f:selectItems value="#{categoriaController.itemsAvailableSelectOne}"
                                            var="categoriaIdCategoriaItem"
-                                           itemValue="#{categoriaIdCategoriaItem}"/>
+                                           itemValue="#{categoriaIdCategoriaItem}" itemLabel="#{categoriaIdCategoriaItem.nombre}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateProductoLabel_catalogoIdCatologo}" for="catalogoIdCatologo" />
                         <p:selectOneMenu id="catalogoIdCatologo" value="#{productoController.selected.catalogoIdCatologo}" required="true" requiredMessage="#{bundle.EditProductoRequiredMessage_catalogoIdCatologo}">
                             <f:selectItems value="#{catalogoController.itemsAvailableSelectOne}"
                                            var="catalogoIdCatologoItem"
-                                           itemValue="#{catalogoIdCatologoItem}"/>
+                                           itemValue="#{catalogoIdCatologoItem}"   itemLabel="#{catalogoIdCatologoItem.nombre}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{productoController.create}" value="#{bundle.Save}" update="display,:ProductoListForm:datalist,:growl" oncomplete="handleSubmit(args,'ProductoCreateDialog');"/>
