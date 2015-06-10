@@ -6,9 +6,11 @@
 package edu.co.sena.tennisshop.controler.administrador.beans;
 
 import edu.co.sena.tennisshop.modelo.entities.Producto;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,4 +30,21 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         super(Producto.class);
     }
     
+    public List<Producto> finById(Object id) {
+        Query queryJPQL = getEntityManager().createNamedQuery("Producto.findByIdProducto");
+        queryJPQL.setParameter("idProducto", id);
+        return queryJPQL.getResultList();
+    }
+
+    public List<Producto> findByNombre(String nombreProBuscar) {
+        String sqlQuery = "SELECT * FROM producto pro where pro.NOMBRE_PRODCUTO like '%" + nombreProBuscar + "%';";
+        Query query2 = getEntityManager().createNativeQuery(sqlQuery, Producto.class);
+        return query2.getResultList();
+    }
+
+    public List<Producto> findByIdCategoria(int nombreCategoria) {
+        String sqlQuery = "SELECT * FROM producto pro where pro.CATEGORIA_ID_CATEGORIA like '%"  + nombreCategoria + "%';";
+        Query query3 = getEntityManager().createNativeQuery(sqlQuery, Producto.class);
+        return query3.getResultList();
+    }
 }
