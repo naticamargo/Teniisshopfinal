@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+<ui:composition>
+       <p:dialog id="ProductoViewDlgBuscar" widgetVar="ProductoViewDialogBuscar" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewProductoTitle}">
+            <h:form id="ProductoViewFormBuscar">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{productoController.selectBuscar != null}">
+                          <h:outputText value="#{bundle.ViewProductoLabel_idProducto}"/>
+                          <h:outputText value="#{productoController.selectBuscar.idProducto}" title="#{bundle.ViewProductoTitle_idProducto}"/>
+                        <h:outputText value="#{bundle.ViewProductoLabel_nombreProdcuto}"/>
+                        <h:outputText value="#{productoController.selectBuscar.nombreProdcuto}" title="#{bundle.ViewProductoTitle_nombreProdcuto}"/>
+                        <h:outputText value="#{bundle.ViewProductoLabel_precio}"/>
+                        <h:outputText value="#{productoController.selectBuscar.precio}" title="#{bundle.ViewProductoTitle_precio}"/>
+                        <h:outputText value="#{bundle.ViewProductoLabel_imagen}"/>
+                        <h:outputText value="#{productoController.selectBuscar.imagen}" title="#{bundle.ViewProductoTitle_imagen}"/>
+                        <h:outputText value="#{bundle.ViewProductoLabel_cantidad}"/>
+                        <h:outputText value="#{productoController.selectBuscar.cantidad}" title="#{bundle.ViewProductoTitle_cantidad}"/>
+                        <h:outputText value="#{bundle.ViewProductoLabel_descripcion}"/>
+                        <h:outputText value="#{productoController.selectBuscar.descripcion}" title="#{bundle.ViewProductoTitle_descripcion}"/>
+                        <h:outputText value="#{bundle.ViewProductoLabel_descuento}"/>
+                        <p:selectBooleanCheckbox value="#{productoController.selectBuscar.descuento}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewProductoLabel_categoriaIdCategoria}"/>
+                        <h:outputText value="#{productoController.selectBuscar.catalogoIdCatologo}" title="#{bundle.ViewProductoTitle_categoriaIdCategoria}"/>
+                        <h:outputText value="#{bundle.ViewProductoLabel_catalogoIdCatologo}"/>
+                        <h:outputText value="#{productoController.selectBuscar.catalogoIdCatologo}" title="#{bundle.ViewProductoTitle_catalogoIdCatologo}"/>
+                        
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ProductoViewDialogBuscar.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+   
+</html>
