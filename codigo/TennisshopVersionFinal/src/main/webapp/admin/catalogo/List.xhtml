@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition template="/admin/template.xhtml">
 
@@ -54,10 +55,82 @@
                     </p:dataTable>
                 </p:panel>
             </h:form>
+ <!--buscar  catalogo-->
+ <p:panel header="#{bundle.BuscarcatalogoTitle_Idcatalogo}" id="panelBusqueda">
+                <p:messages autoUpdate="true"/>
+                <h:panelGroup id="display">
+                    <h:form id="BuscarIdCatalogoForm">
+                        <p:messages autoUpdate="true" closable="true" for="buscarIdCatalogo"/>
+                        <h:panelGrid id="grid1" columns="9"  cellspacing="0">
+                            <p:outputLabel value="#{bundle.Buscarcatalogolabel_Idcatalogo}" for="buscarIdCatalogo" />
+                            <p:inputText id="buscarIdCatalogo" value="#{catalogoController.idBuscar}" title="#{bundle.BuscarcatalogoTitle_Idcatalogo}" required="true" requiredMessage="#{bundle.CreateCatalogoRequiredMessage_idCatologo}"/>
+                            <p:commandButton id="botonId"  value="#{bundle.Buscar}"
+                                             update=":BuscarCatalogoListForm,:panelBusqueda" actionListener="#{catalogoController.buscarPorId()}" />
+                                        
+                            <p:message for="buscarIdCatalogo" />
+                        </h:panelGrid>
+                    </h:form> 
+                    
+                <h:form id="BuscarNombreCatalogoForm">
+                <p:messages autoUpdate="true"/>
+                 <p:messages autoUpdate="true" closable="true" for="buscarIdCatalogo"/>
+                        <h:panelGrid id="grid1" columns="9"  cellspacing="0">
+                            <p:outputLabel value="#{bundle.Buscarcatalogolabel_nombre}" for="buscarnombre" />
+                            <p:inputText id="buscarnombre" required="true" value="#{catalogoController.nombrebuscar}"/>
+                            <p:commandButton id="botonNombre"  icon="ui-icon-search"  
+                                             value="#{bundle.Buscar}" 
+                                             update=":BuscarCatalogoListForm,:panelBusqueda" actionListener="#{catalogoController.buscarPorNombre()}" />
+                                            
+                            <p:message for="buscarnombre" />
+                        </h:panelGrid>
+               
+                        </h:form>
+                    </h:panelGroup>
+            </p:panel>
+            <!-- El Resultado De La Busqueda De Catalogos -->
+            <h:form id="BuscarCatalogoListForm">
+                <p:panel header="#{bundle.BuscarcatalogoTitle}" id="panelBuscar">
+                    <p:dataTable id="datalist2" value="#{catalogoController.itemsBuscados}" var="itemEncontrados"
+                                 selectionMode="single" selection="#{catalogoController.selectBuscar}"
+                                 paginator="true"
+                                 rowKey="#{itemEncontrados.idCatologo}"
+                                 rows="5"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 emptyMessage="#{bundle.BuscarListMessage}"
+                                 >
 
+                        <p:ajax event="rowSelect"   update="viewButtonBuscar2 editButtonBuscar2 deleteButtonBuscar2"/>
+                        <p:ajax event="rowUnselect" update="viewButtonBuscar2 editButtonBuscar2 deleteButtonBuscar2"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCatalogoTitle_idCatologo}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.idCatologo}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCatalogoTitle_nombre}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.nombre}"/>
+                        </p:column>
+                        
+                        <f:facet name="footer">
+
+                        <p:commandButton id="viewButtonBuscar2"   icon="ui-icon-search" value="#{bundle.View}" update=":CatalogoViewFormBuscar" oncomplete="PF('CatalogoViewDialogBuscar').show()" disabled="#{empty catalogoController.selectBuscar}"/>
+                        <p:commandButton id="editButtonBuscar2"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CatalogoViewFormBuscar" oncomplete="PF('CatalogoEditDialogBuscar').show()" disabled="#{empty catalogoController.selectBuscar}"/>
+                        <p:commandButton id="deleteButtonBuscar2" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{catalogoController.eliminarBuscado()}" update=":growl,:BuscarCatalogoListForm, :CatalogoListForm:datalist," disabled="#{empty catalogoController.selectBuscar}"/>
+                        </f:facet>
+                            
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+            
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
+            <ui:include src="ViewBuscar.xhtml"/>
+            <ui:include src="EditBuscar.xhtml"/>
         </ui:define>
     </ui:composition>
 
