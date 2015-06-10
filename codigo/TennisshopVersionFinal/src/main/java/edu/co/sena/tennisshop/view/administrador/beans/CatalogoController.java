@@ -26,7 +26,13 @@ public class CatalogoController implements Serializable {
     @EJB
     private edu.co.sena.tennisshop.controler.administrador.beans.CatalogoFacade ejbFacade;
     private List<Catalogo> items = null;
+    private List<Catalogo> itemsBuscados = null;
     private Catalogo selected;
+    private Catalogo selectBuscar;
+    private Integer IdBuscar;
+    private String Nombrebuscar;
+    
+    
 
     public CatalogoController() {
     }
@@ -72,6 +78,30 @@ public class CatalogoController implements Serializable {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
+    }
+    public void eliminarBuscado() {
+        persist(PersistAction.DELETEBUSCAR, ResourceBundle.getBundle("/Bundle").getString("CatalogoDeleted"));
+        if (!JsfUtil.isValidationFailed()) {
+            selected = null; // Remove selection
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
+        itemsBuscados = null;
+        selectBuscar = null;
+
+    }
+    
+     public List<Catalogo> buscarPorId() {
+        itemsBuscados = getFacade().finById(IdBuscar);
+        Nombrebuscar = null;
+        items = null;
+        return itemsBuscados;
+    }
+
+    public List<Catalogo> buscarPorNombre() {
+        itemsBuscados = getFacade().findByNombre(Nombrebuscar);
+        items = null;
+        IdBuscar = null;
+        return itemsBuscados;
     }
 
     public List<Catalogo> getItems() {
@@ -119,6 +149,46 @@ public class CatalogoController implements Serializable {
 
     public List<Catalogo> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+
+    public edu.co.sena.tennisshop.controler.administrador.beans.CatalogoFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(edu.co.sena.tennisshop.controler.administrador.beans.CatalogoFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
+    public List<Catalogo> getItemsBuscados() {
+        return itemsBuscados;
+    }
+
+    public void setItemsBuscados(List<Catalogo> itemsBuscados) {
+        this.itemsBuscados = itemsBuscados;
+    }
+
+    public Catalogo getSelectBuscar() {
+        return selectBuscar;
+    }
+
+    public void setSelectBuscar(Catalogo selectBuscar) {
+        this.selectBuscar = selectBuscar;
+    }
+
+    public Integer getIdBuscar() {
+        return IdBuscar;
+    }
+
+    public void setIdBuscar(Integer IdBuscar) {
+        this.IdBuscar = IdBuscar;
+    }
+
+    public String getNombrebuscar() {
+        return Nombrebuscar;
+    }
+
+    public void setNombrebuscar(String Nombrebuscar) {
+        this.Nombrebuscar = Nombrebuscar;
     }
 
     @FacesConverter(forClass = Catalogo.class)
