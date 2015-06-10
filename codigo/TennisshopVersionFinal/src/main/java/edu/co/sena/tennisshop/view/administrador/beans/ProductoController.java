@@ -26,7 +26,13 @@ public class ProductoController implements Serializable {
     @EJB
     private edu.co.sena.tennisshop.controler.administrador.beans.ProductoFacade ejbFacade;
     private List<Producto> items = null;
+    private List<Producto> itemsBuscados = null;
     private Producto selected;
+     private Producto selectBuscar;
+    private String idBuscar;
+    private String nombreBuscar;
+    private  Integer IdCategoria;
+    
 
     public ProductoController() {
     }
@@ -73,6 +79,41 @@ public class ProductoController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
+     public void eliminarBuscado() {
+        persist(PersistAction.DELETEBUSCAR, ResourceBundle.getBundle("/Bundle").getString("ProductoDeleted"));
+        if (!JsfUtil.isValidationFailed()) {
+            selected = null; // Remove selection
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
+        itemsBuscados = null;
+        selectBuscar = null;
+
+    }
+    
+     public List<Producto> buscarPorId() {
+        itemsBuscados = getFacade().finById(idBuscar);
+        nombreBuscar = null;
+        IdCategoria= null;
+        items = null;
+        return itemsBuscados;
+    }
+
+    public List<Producto> buscarPorNombre() {
+        itemsBuscados = getFacade().findByNombre(nombreBuscar);
+        items = null;
+        idBuscar = null;
+        IdCategoria = null;
+        return itemsBuscados;
+    }
+
+    public List<Producto> buscarPorIdCategoria() {
+        itemsBuscados = getFacade().findByIdCategoria(IdCategoria);
+        items = null;
+        idBuscar = null;
+        nombreBuscar = null;
+        return itemsBuscados;
+    }
+
 
     public List<Producto> getItems() {
         if (items == null) {
@@ -119,6 +160,54 @@ public class ProductoController implements Serializable {
 
     public List<Producto> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+
+    public edu.co.sena.tennisshop.controler.administrador.beans.ProductoFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(edu.co.sena.tennisshop.controler.administrador.beans.ProductoFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
+    public List<Producto> getItemsBuscados() {
+        return itemsBuscados;
+    }
+
+    public void setItemsBuscados(List<Producto> itemsBuscados) {
+        this.itemsBuscados = itemsBuscados;
+    }
+
+    public Producto getSelectBuscar() {
+        return selectBuscar;
+    }
+
+    public void setSelectBuscar(Producto selectBuscar) {
+        this.selectBuscar = selectBuscar;
+    }
+
+    public String getIdBuscar() {
+        return idBuscar;
+    }
+
+    public void setIdBuscar(String idBuscar) {
+        this.idBuscar = idBuscar;
+    }
+
+    public String getNombreBuscar() {
+        return nombreBuscar;
+    }
+
+    public void setNombreBuscar(String nombreBuscar) {
+        this.nombreBuscar = nombreBuscar;
+    }
+
+    public Integer getIdCategoria() {
+        return IdCategoria;
+    }
+
+    public void setIdCategoria(Integer IdCategoria) {
+        this.IdCategoria = IdCategoria;
     }
 
     @FacesConverter(forClass = Producto.class)
