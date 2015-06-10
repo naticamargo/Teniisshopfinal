@@ -20,7 +20,7 @@
                         <p:selectOneMenu id="DEPARTAMENTOidDEPARTAMENTO" value="#{municipioController.selected.DEPARTAMENTOidDEPARTAMENTO}" required="true" requiredMessage="#{bundle.EditMunicipioRequiredMessage_DEPARTAMENTOidDEPARTAMENTO}">
                             <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
                                            var="DEPARTAMENTOidDEPARTAMENTOItem"
-                                           itemValue="#{DEPARTAMENTOidDEPARTAMENTOItem}"/>
+                                           itemValue="#{DEPARTAMENTOidDEPARTAMENTOItem}" itemLabel="#{DEPARTAMENTOidDEPARTAMENTOItem.nombreDeparamento}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{municipioController.create}" value="#{bundle.Save}" update="display,:MunicipioListForm:datalist,:growl" oncomplete="handleSubmit(args,'MunicipioCreateDialog');"/>
