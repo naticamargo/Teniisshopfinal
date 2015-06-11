@@ -8,7 +8,7 @@
     
     
     
-     <ui:composition template="/Admin/templateAdmin.xhtml">
+     <ui:composition template="/admin/template.xhtml">
 
 
         <ui:define name="title">
@@ -83,7 +83,7 @@
                         <h:panelGrid id="grid1" columns="5"  cellspacing="0" >
                             <p:outputLabel for="buscarRolUse" value="#{bundle.BuscarUsuarioLabel_Rol}" />
                             <p:selectOneMenu id="buscarRolUse" value="#{usuarioController.rolBuscar}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_rol}">
-                                <f:selectItems value="#{usuarioController.listRoles}"
+                                <f:selectItems value="#{usuarioController.listroles}"
                                                var="usuarioRolItemBuscar"
                                                itemValue="#{usuarioRolItemBuscar}"/>
                             </p:selectOneMenu>
@@ -97,26 +97,16 @@
                         <p:messages autoUpdate="true" closable="true" for="buscarIdUsuario"/>
                         <h:panelGrid id="grid1" columns="5"  cellspacing="0" >
                             <p:outputLabel for="buscarActivoUse" value="#{bundle.BuscarUsuarioLabel_Activo}" />
-                            <p:selectOneMenu id="buscarActivoUse" value="#{usuarioController.activoBuscar}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_activo}">
+                            <p:selectOneMenu id="buscarActivoUse" value="#{usuarioController.activoBuscar}}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_activo}">
                                 <f:selectItems value="#{usuarioController.listActivos}"
                                                var="usuarioActivoItemBuscar"
                                                itemValue="#{usuarioActivoItemBuscar}"/>
                             </p:selectOneMenu>
-                            <p:commandButton id="botonActivo" icon="ui-icon-search" value="#{bundle.Buscar}" update=":BuscarUsuarioListForm, :panelBusqueda " actionListener="#{usuarioController.buscarPorActivo()}" />
+                            <p:commandButton id="botonActivo" icon="ui-icon-search" value="#{bundle.Buscar}" update=":BuscarUsuarioListForm, :panelBusqueda " actionListener="#{usuarioController.buscarPorEstado()}" />
                             <p:message for="buscarActivoUse" />
                         </h:panelGrid>
                     </h:form>
-                    
-                    <!--Formulario de busqueda por Correo -->
-                     <h:form id="BuscarUsuarioForm4">
-                        <p:messages autoUpdate="true" closable="true" for="buscarIdUsuario"/>
-                        <h:panelGrid id="grid1" columns="5"  cellspacing="0">
-                            <p:outputLabel for="buscarCorreoUse" value="#{bundle.BuscarUsuarioLabel_Correo}"  />
-                            <p:inputText id="buscarCorreoUse" value="#{usuarioController.correoBuscar}" title="#{bundle.BuscarUsuarioTitle_Correo}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_correo}"/>
-                            <p:commandButton id="botonCorreoUse" icon="ui-icon-search" value="#{bundle.Buscar}" update=":BuscarUsuarioListForm, :panelBusqueda" actionListener="#{usuarioController.buscarPorCorreo}"/>
-                            <p:message for="buscarCorreoUse" />
-                        </h:panelGrid>
-                    </h:form>
+                              
 
                 </h:panelGroup>
             </p:panel>
@@ -126,7 +116,7 @@
                 <p:panel header="#{bundle.BuscarListUsuarioTitle}" id="panelBuscar">
 
                     <p:dataTable id="datalist2" value="#{usuarioController.itemsBuscados}" var="itemEncontrados"
-                                 selectionMode="single" selection="#{usuarioController.selectBuscar}"
+                                 selectionMode="single" selection="#{usuarioController.selectedBuscar}"
                                  paginator="true"
                                  rowKey="#{itemEncontrados.idUsuario}"
                                  rows="5"
@@ -162,9 +152,9 @@
                         </p:column>
                         <f:facet name="footer">
 
-                            <p:commandButton id="viewButtonBuscar2"   icon="ui-icon-search" value="#{bundle.View}" update=":UsuarioViewFormBuscar" oncomplete="PF('UsuarioViewDialogBuscar').show()" disabled="#{empty usuarioController.selectBuscar}"/>
-                            <p:commandButton id="editButtonBuscar2"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":UsuarioEditFormBuscar" oncomplete="PF('UsuarioEditDialogBuscar').show()" disabled="#{empty usuarioController.selectBuscar}"/>
-                            <p:commandButton id="deleteButtonBuscar2" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{usuarioController.eliminarBuscado}" update=":growl,:BuscarUsuarioListForm:datalist2, :UsuarioListForm:datalist" disabled="#{empty usuarioController.selectBuscar}"/>
+                            <p:commandButton id="viewButtonBuscar2"   icon="ui-icon-search" value="#{bundle.View}" update=":UsuarioViewFormBuscar" oncomplete="PF('UsuarioViewDialogBuscar').show()" disabled="#{empty usuarioController.selectedBuscar}"/>
+                            <p:commandButton id="editButtonBuscar2"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":UsuarioEditFormBuscar" oncomplete="PF('UsuarioEditDialogBuscar').show()" disabled="#{empty usuarioController.selectedBuscar}"/>
+                            <p:commandButton id="deleteButtonBuscar2" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{usuarioController.eliminarBuscado}" update=":growl,:BuscarUsuarioListForm:datalist2, :UsuarioListForm:datalist" disabled="#{empty usuarioController.selectedBuscar}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
@@ -174,7 +164,7 @@
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
             <ui:include src="ViewBuscar.xhtml"/>
-            <ui:include src="EditBuscar.xhtml"/>
+            <ui:include src="EditBusar.xhtml"/>
 
    
         </ui:define>
