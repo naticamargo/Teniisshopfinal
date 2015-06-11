@@ -55,9 +55,80 @@
                         </f:facet>
                         </p:dataTable> 
             
-                        </p:panel>
+              </p:panel>
             </h:form>
-            
+            <!--buscar  categoria-->
+            <p:panel header="#{bundle.BuscarcategoriaTitle}" id="panelBusqueda">
+                <p:messages autoUpdate="true"/>
+                <h:panelGroup id="display">
+                    <h:form id="BuscarIdCategoriaForm">
+                        <p:messages autoUpdate="true" closable="true" for="buscarIdCategoria"/>
+                        <h:panelGrid id="grid1" columns="9"  cellspacing="0">
+                            <p:outputLabel value="#{bundle.Buscarcategorialabel_Idcategoria}" for="buscarIdCategoria" />
+                            <p:inputText id="buscarIdCategoria" value="#{categoriaController.idBuscar}" title="#{bundle.BuscarCategoriaTitle_idCategoria}" required="true" requiredMessage="#{bundle.CreateCategoriaRequiredMessage_idCategoria}"/>
+                            <p:commandButton id="botonId"  value="#{bundle.Buscar}"
+                                             update=":BuscarCategoriaListForm,:panelBusqueda" actionListener="#{categoriaController.buscarporId()}" />
+                                        
+                            <p:message for="buscarIdCategoria" />
+                        </h:panelGrid>
+                    </h:form> 
+                    
+                <h:form id="BuscarNombreCategoriaForm">
+                <p:messages autoUpdate="true"/>
+                 <p:messages autoUpdate="true" closable="true" for="buscarIdCategoria"/>
+                        <h:panelGrid id="grid1" columns="9"  cellspacing="0">
+                            <p:outputLabel value="#{bundle.BuscarCategoriaLabel_nombre}" for="buscarnombre" />
+                            <p:inputText id="buscarnombre" required="true" value="#{categoriaController.nombreBuscar}"/>
+                            <p:commandButton id="botonNombre"  icon="ui-icon-search"  
+                                             value="#{bundle.Buscar}" 
+                                             update=":BuscarCategoriaListForm,:panelBusqueda" actionListener="#{categoriaController.buscarPorNombre()}" />
+                                            
+                            <p:message for="buscarnombre" />
+                        </h:panelGrid>
+               
+                        </h:form>
+                   
+                        
+                    </h:panelGroup>
+            </p:panel>
+             <!-- El Resultado De La Busqueda De Categoria -->
+            <h:form id="BuscarCategoriaListForm">
+                <p:panel header="#{bundle.BuscarcategoriaTitle}" id="panelBuscar">
+                    <p:dataTable id="datalist2" value="#{categoriaController.itemsbuscados}" var="itemEncontrados"
+                                 selectionMode="single" selection="#{categoriaController.selectBuscar}"
+                                 paginator="true"
+                                 rowKey="#{itemEncontrados.idCategoria}"
+                                 rows="5"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 emptyMessage="#{bundle.BuscarListMessage}"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="viewButtonBuscar2 editButtonBuscar2 deleteButtonBuscar2"/>
+                        <p:ajax event="rowUnselect" update="viewButtonBuscar2 editButtonBuscar2 deleteButtonBuscar2"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCategoriaTitle_idCategoria}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.idCategoria}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCategoriaTitle_nombre}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.nombre}"/>
+                        </p:column>
+                        
+                        <f:facet name="footer">
+
+                            <p:commandButton id="viewButtonBuscar2"   icon="ui-icon-search" value="#{bundle.View}" update=":CategoriaViewFormBuscar" oncomplete="PF('CategoriaViewDialogBuscar').show()" disabled="#{empty categoriaController.selectBuscar}"/>
+                            <p:commandButton id="editButtonBuscar2"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CategoriaEditFormBuscar" oncomplete="PF('CategoriaEditDialogBuscar').show()" disabled="#{empty categoriaController.selectBuscar}"/>
+                            <p:commandButton id="deleteButtonBuscar2" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{categoriaController.eliminarBuscado()}" update=":growl,:BuscarCategoriaListForm, :CategoriaListForm:datalist," disabled="#{empty categoriaController.selectBuscar}"/>
+                        </f:facet>
+                            
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
                    
             
             
@@ -65,6 +136,8 @@
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
+            <ui:include src="ViewBuscar.xhtml"/>
+            <ui:include src="EditBuscar.xhtml"/>
         </ui:define>
     </ui:composition>
 
