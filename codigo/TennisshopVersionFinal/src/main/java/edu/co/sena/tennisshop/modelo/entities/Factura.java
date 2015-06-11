@@ -53,14 +53,14 @@ public class Factura implements Serializable {
     @Size(max = 20)
     @Column(name = "FORMA_PAGO")
     private String formaPago;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "factura", fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "factura", fetch = FetchType.LAZY)
     private Pago pago;
     @JoinColumns({
         @JoinColumn(name = "CUENTA_TIPO_DOCUMENTO", referencedColumnName = "TIPO_DOCUMENTO"),
         @JoinColumn(name = "CUENTA_NUMERO_DOCUMENTO", referencedColumnName = "NUMERO_DOCUMENTO")})
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta cuenta;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "factura", fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "factura", fetch = FetchType.LAZY)
     private Pedido pedido;
 
     public Factura() {
