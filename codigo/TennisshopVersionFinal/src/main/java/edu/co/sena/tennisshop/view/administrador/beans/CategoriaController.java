@@ -28,7 +28,7 @@ public class CategoriaController implements Serializable {
     private List<Categoria> items = null;
     private List<Categoria> itemsbuscados=null;
     private Categoria selected;
-    private Categoria selectedBuscar;
+    private Categoria selectBuscar;
     
     private Integer idBuscar;
     private String nombreBuscar;
@@ -70,7 +70,7 @@ public class CategoriaController implements Serializable {
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("CategoriaUpdated"));
-        selectedBuscar = null;
+        selectBuscar = null;
         itemsbuscados = null;
     }
     public void updateBuscar(){
@@ -93,7 +93,7 @@ public class CategoriaController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
         }
         itemsbuscados = null;
-        selectedBuscar = null;
+        selectBuscar = null;
   }
     public List<Categoria> getItems() {
         if (items == null) {
@@ -173,11 +173,35 @@ public class CategoriaController implements Serializable {
     }
 
     public Categoria getSelectedBuscar() {
-        return selectedBuscar;
+        return selectBuscar;
     }
 
     public void setSelectedBuscar(Categoria selectedBuscar) {
-        this.selectedBuscar = selectedBuscar;
+        this.selectBuscar = selectedBuscar;
+    }
+
+    public Categoria getSelectBuscar() {
+        return selectBuscar;
+    }
+
+    public void setSelectBuscar(Categoria selectBuscar) {
+        this.selectBuscar = selectBuscar;
+    }
+
+    public Integer getIdBuscar() {
+        return idBuscar;
+    }
+
+    public void setIdBuscar(Integer idBuscar) {
+        this.idBuscar = idBuscar;
+    }
+
+    public String getNombreBuscar() {
+        return nombreBuscar;
+    }
+
+    public void setNombreBuscar(String nombreBuscar) {
+        this.nombreBuscar = nombreBuscar;
     }
 
     @FacesConverter(forClass = Categoria.class)
