@@ -6,6 +6,7 @@ import edu.co.sena.tennisshop.vista.general.util.JsfUtil.PersistAction;
 import edu.co.sena.tennisshop.controler.administrador.beans.UsuarioFacade;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -26,9 +27,23 @@ public class UsuarioController implements Serializable {
     @EJB
     private edu.co.sena.tennisshop.controler.administrador.beans.UsuarioFacade ejbFacade;
     private List<Usuario> items = null;
+    private List<Usuario> itemsBuscados = null;
     private Usuario selected;
+    private Usuario selectedBuscar;
+    private String idBuscar;
+    private String rolBuscar;
+    private String activoBuscar;
+    private String correoBuscar;
+    private final List<String> listroles;
+    private final List<String> listActivos;
+    
 
     public UsuarioController() {
+        this.listroles = Arrays.asList(ResourceBundle.getBundle("/Bundle").getString("SelectRolCliente"),
+                ResourceBundle.getBundle("/Bundle").getString("SelectRolEmpleado"),
+                ResourceBundle.getBundle("/Bundle").getString("SelectRolAdministrador"));
+        this.listActivos = Arrays.asList(ResourceBundle.getBundle("/Bundle").getString("SelectEstadoActivo"),
+                ResourceBundle.getBundle("/Bundle").getString("SelectEstadoInactivo"));
     }
 
     public Usuario getSelected() {
@@ -65,6 +80,12 @@ public class UsuarioController implements Serializable {
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("UsuarioUpdated"));
     }
+    public void updateBuscar() {
+        persist(PersistAction.UPDATEBUSCAR, ResourceBundle.getBundle("/Bundle").getString("UsuarioUpdated"));
+        items = null;
+        selected = null;
+
+    }
 
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("UsuarioDeleted"));
@@ -73,13 +94,45 @@ public class UsuarioController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
+    
+ public void eliminarBuscado() {
+        persist(PersistAction.DELETEBUSCAR, ResourceBundle.getBundle("/Bundle").getString("UsuarioDeleted"));
+        if (!JsfUtil.isValidationFailed()) {
+            selected = null; // Remove selection
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
+        itemsBuscados = null;
+        selectedBuscar = null;
 
+    }
+ 
     public List<Usuario> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
         return items;
     }
+     public List<Usuario> buscarPorId() {
+        itemsBuscados = getFacade().finById(idBuscar);
+        rolBuscar = null;
+        items = null;
+        return itemsBuscados;
+    }
+
+    public List<Usuario> buscarPorRol() {
+        itemsBuscados = getFacade().findByParteRol(rolBuscar);
+        items = null;
+        idBuscar = null;
+        return itemsBuscados;
+    }
+    public List<Usuario> buscarPorEstado() {
+        itemsBuscados = getFacade().findByParteEstado(activoBuscar);
+        items = null;
+        idBuscar = null;
+        return itemsBuscados;
+    }
+    
+  
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
@@ -108,6 +161,7 @@ public class UsuarioController implements Serializable {
             }
         }
     }
+    
 
     public Usuario getUsuario(java.lang.String id) {
         return getFacade().find(id);
@@ -120,6 +174,75 @@ public class UsuarioController implements Serializable {
     public List<Usuario> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
+
+    public edu.co.sena.tennisshop.controler.administrador.beans.UsuarioFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(edu.co.sena.tennisshop.controler.administrador.beans.UsuarioFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
+    public List<Usuario> getItemsBuscados() {
+        return itemsBuscados;
+    }
+
+    public void setItemsBuscados(List<Usuario> itemsBuscados) {
+        this.itemsBuscados = itemsBuscados;
+    }
+
+    public Usuario getSelectedBuscar() {
+        return selectedBuscar;
+    }
+
+    public void setSelectedBuscar(Usuario selectedBuscar) {
+        this.selectedBuscar = selectedBuscar;
+    }
+
+    public String getIdBuscar() {
+        return idBuscar;
+    }
+
+    public void setIdBuscar(String idBuscar) {
+        this.idBuscar = idBuscar;
+    }
+
+    public String getRolBuscar() {
+        return rolBuscar;
+    }
+
+    public void setRolBuscar(String rolBuscar) {
+        this.rolBuscar = rolBuscar;
+    }
+
+   
+
+    public String getCorreoBuscar() {
+        return correoBuscar;
+    }
+
+    public void setCorreoBuscar(String correoBuscar) {
+        this.correoBuscar = correoBuscar;
+    }
+
+    public List<String> getListroles() {
+        return listroles;
+    }
+    
+
+    public List<String> getListActivos() {
+        return listActivos;
+    }
+
+    public String getActivoBuscar() {
+        return activoBuscar;
+    }
+
+    public void setActivoBuscar(String activoBuscar) {
+        this.activoBuscar = activoBuscar;
+    }
+
+   
 
     @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {
