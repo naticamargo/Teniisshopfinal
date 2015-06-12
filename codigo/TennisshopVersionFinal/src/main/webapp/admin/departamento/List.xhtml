@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-   <ui:composition template="/Admin/templateAdmin.xhtml">
+   <ui:composition template="/admin/template.xhtml">
 
 
         <ui:define name="title">
@@ -20,7 +20,7 @@
                     <p:dataTable id="datalist" value="#{departamentoController.items}" var="item"
                                  selectionMode="single" selection="#{departamentoController.selected}"
                                  paginator="true"
-                                 rowKey="#{item.idDepartamento}"
+                                 rowKey="#{item.idDEPARTAMENTO}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
@@ -32,7 +32,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDepartamentoTitle_idDepartamento}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idDepartamento}"/>
+                            <h:outputText value="#{item.idDEPARTAMENTO}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
@@ -49,8 +49,8 @@
                     </p:dataTable>
                 </p:panel>
             </h:form>
-
-            <!-- El Buscador De Departamentos -->
+            
+              <!-- El Buscador De Departamentos -->
             <p:panel header="#{bundle.BuscadorDepartamentoTitle}" id="panelBusqueda">
                 <p:messages autoUpdate="true"/>
                 <h:panelGroup id="displayBuscar">
@@ -58,13 +58,14 @@
                         <p:messages autoUpdate="true" closable="true" for="buscarIdDepartamento"/>
                         <h:panelGrid id="grid1" columns="5"  cellspacing="0">
                             <p:outputLabel value="#{bundle.BuscarDepartamentoLabel_IdDepartamento}" for="buscarIdDepartamento" />
-                            <p:inputText id="buscarIdDepartamento" value="#{departamentoController.idBuscar}" title="#{bundle.BuscarDepartamentoTitle_IdDepartamento}" required="true" requiredMessage="#{bundle.CreateDepartamentoRequiredMessage_nombreDeparamento}"/>
-                            <p:commandButton id="botonIdDep"  value="#{bundle.Buscar}" update=":BuscarDepartamentoListForm,:panelBusqueda" actionListener="#{departamentoController.buscarPorId}"/>
+                            <p:inputText id="buscarIdDepartamento" value="#{departamentoController.idBuscar}" title="#{bundle.BuscarDepartamentoTitle_IdDepartamento}" required="true" requiredMessage="#{bundle.CreateDepartamentoRequiredMessage_nombreDepartamento}"/>
+                            <p:commandButton id="botonIdDep"  value="#{bundle.Buscar}" update=":BuscarDepartamentoListForm,:panelBusqueda" actionListener="#{departamentoController.buscarPorId()}"/>
                             <p:message for="buscarIdDepartamento" />
                         </h:panelGrid>
                     </h:form>
                     
-                    <!--Formulario de buscar por Nombre -->
+                    
+                    <!--Formulario de buscar por nombre -->
                     <h:form id="BuscarDepartamentoForm2">
                         <p:messages autoUpdate="true" closable="true" for="buscarIdDepartamento"/>
                         <h:panelGrid id="grid1" columns="5"  cellspacing="0">
@@ -76,45 +77,51 @@
                     </h:form>
                 </h:panelGroup>
             </p:panel>
-
-            <!-- Resultados De La Busqueda De Departamentos -->
+<!-- Resultados De La Busqueda De Departamentos -->
             <h:form id="BuscarDepartamentoListForm">
                 <p:panel header="#{bundle.BuscarListDepartamentoTitle}" id="panelBuscar">
 
                     <p:dataTable id="datalist2" value="#{departamentoController.itemsBuscados}" var="itemEncontrados"
-                                 selectionMode="single" selection="#{departamentoController.selectedBuscar}"
+                                 selectionMode="single" selection="#{departamentoController.selectBuscar}"
                                  paginator="true"
-                                 rowKey="#{itemEncontrados.idDepartamento}"
+                                 rowKey="#{itemEncontrados.idDEPARTAMENTO}"
                                  rows="5"
                                  rowsPerPageTemplate="5,10,20,30,40,50"
+                                 emptyMessage="#{bundle.BuscarListEmptyMSS}"
                                  >
 
                         <p:ajax event="rowSelect"   update="viewButtonBuscar2 editButtonBuscar2 deleteButtonBuscar2"/>
                         <p:ajax event="rowUnselect" update="viewButtonBuscar2 editButtonBuscar2 deleteButtonBuscar2"/>
 
-                        <p:column>
+                        <p:column >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDepartamentoTitle_idDepartamento}"/>
                             </f:facet>
-                            <h:outputText value="#{itemEncontrados.idDepartamento}"/>
+                            <h:outputText value="#{itemEncontrados.idDEPARTAMENTO}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDepartamentoTitle_nombreDeparamento}"/>
+                                <h:outputText value="#{bundle.ListDepartamentoTitle_nombreDepartamento}"/>
                             </f:facet>
                             <h:outputText value="#{itemEncontrados.nombreDeparamento}"/>
                         </p:column>
                         <f:facet name="footer">
 
-                            <p:commandButton id="viewButtonBuscar2"   icon="ui-icon-search" value="#{bundle.View}" update=":DepartamentoViewFormBuscar" oncomplete="PF('DepartamentoViewDialogBuscar').show()" disabled="#{empty departamentoController.selectedBuscar}"/>
-                            <p:commandButton id="editButtonBuscar2"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":DepartamentoEditFormBuscar" oncomplete="PF('DepartamentoEditDialogBuscar').show()" disabled="#{empty departamentoController.selectedBuscar}"/>
-                            <p:commandButton id="deleteButtonBuscar2" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{departamentoController.eliminarBuscado}" update=":growl,:BuscarDepartamentoListForm:datalist2, :DepartamentoListForm:datalist" disabled="#{empty departamentoController.selectBuscar}"/>
+                            <p:commandButton id="viewButtonBuscar2"   icon="ui-icon-search" value="#{bundle.View}" update=":DepartamentoViewFormBuscar" oncomplete="PF('DepartamentoViewDialogBuscar').show()" disabled="#{empty departamentoController.selectBuscar}"/>
+                            <p:commandButton id="editButtonBuscar2"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":DepartamentoEditFormBuscar" oncomplete="PF('DepartamentoEditDialogBuscar').show()" disabled="#{empty departamentoController.selectBuscar}"/>
+                            <p:commandButton id="deleteButtonBuscar2" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{departamentoController.eliminarBuscado}" update=":growl,:BuscarDepartamentoListForm:datalist2, :DepartamentoListForm:datalist,:panelBusqueda" disabled="#{empty departamentoController.selectBuscar}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
             </h:form>
+          
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
-            <ui:include src="EditBuscar.xhtml"/>
-            <ui:include src="View.xhtml"/>
             <ui:include src="ViewBuscar.xhtml"/>
+            <ui:include src="View.xhtml"/>
+            <ui:include src="EditBuscar.xhtml"/>
+            
+               </ui:define>
+    </ui:composition>
+
+</html>
