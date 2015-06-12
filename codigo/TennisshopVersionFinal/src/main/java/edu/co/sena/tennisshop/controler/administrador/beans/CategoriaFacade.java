@@ -36,7 +36,7 @@ public class CategoriaFacade extends AbstractFacade<Categoria> {
     }
     
     public List<Categoria> findByParteNombre(String nombrecatBuscar) {
-        String sqlQuery = "SELECT * FROM Categoria ca where cat.NOMBRE like '%"+nombrecatBuscar+"%';";
+        String sqlQuery = "SELECT * FROM tennisshop.categoria cat where cat.NOMBRE like '%"+nombrecatBuscar+"%';";
         Query query2 = getEntityManager().createNativeQuery(sqlQuery, Categoria.class);
         return query2.getResultList();
     }
