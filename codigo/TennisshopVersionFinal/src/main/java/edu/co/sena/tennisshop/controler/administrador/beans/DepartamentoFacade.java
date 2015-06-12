@@ -42,7 +42,7 @@ public class DepartamentoFacade extends AbstractFacade<Departamento> {
              
      }
      public List<Departamento> findByParteNombre(String nombreDepBuscar) {
-        String sqlQuery = "SELECT * FROM departamento dep where dep.NOMBRE_NOMBRE_DEPARAMENTO like '%"+nombreDepBuscar+"%';";
+        String sqlQuery = "SELECT * FROM tennisshop.departamento dep where dep.NOMBRE_DEPARAMENTO like '%"+nombreDepBuscar+"%';";
         Query query2 = getEntityManager().createNativeQuery(sqlQuery, Departamento.class);
         return query2.getResultList();
 }
