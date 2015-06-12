@@ -58,7 +58,7 @@
                         <p:messages autoUpdate="true" closable="true" for="buscarIdDepartamento"/>
                         <h:panelGrid id="grid1" columns="5"  cellspacing="0">
                             <p:outputLabel value="#{bundle.BuscarDepartamentoLabel_IdDepartamento}" for="buscarIdDepartamento" />
-                            <p:inputText id="buscarIdDepartamento" value="#{departamentoController.idBuscar}" title="#{bundle.BuscarDepartamentoTitle_IdDepartamento}" required="true" requiredMessage="#{bundle.CreateDepartamentoRequiredMessage_nombreDepartamento}"/>
+                            <p:inputText id="buscarIdDepartamento" value="#{departamentoController.idBuscar}" title="#{bundle.BuscarDepartamentoTitle_idDeparamento}" required="true" requiredMessage="#{bundle.CreateDepartamentoRequiredMessage_nombreDeparamento}"/>
                             <p:commandButton id="botonIdDep"  value="#{bundle.Buscar}" update=":BuscarDepartamentoListForm,:panelBusqueda" actionListener="#{departamentoController.buscarPorId()}"/>
                             <p:message for="buscarIdDepartamento" />
                         </h:panelGrid>
