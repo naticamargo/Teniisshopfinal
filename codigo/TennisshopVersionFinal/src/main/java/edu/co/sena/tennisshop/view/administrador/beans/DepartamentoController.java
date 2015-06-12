@@ -72,6 +72,8 @@ public class DepartamentoController implements Serializable {
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("DepartamentoUpdated"));
+         selectBuscar = null;
+        itemsBuscados = null;
     }
 
     public void updateBuscar() {
@@ -122,11 +124,9 @@ public class DepartamentoController implements Serializable {
     
     public List<Departamento> getItemsBuscados() {
 
-        if (itemsBuscados == getFacade().finById(idBuscar)) {
-            return itemsBuscados;
-        }
-        return null;
+        return itemsBuscados;
     }
+    
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
@@ -194,17 +194,7 @@ public class DepartamentoController implements Serializable {
         return getFacade().findAll();
     }
 
-    public edu.co.sena.tennisshop.controler.administrador.beans.DepartamentoFacade getEjbFacade() {
-        return ejbFacade;
-    }
-
-    public void setEjbFacade(edu.co.sena.tennisshop.controler.administrador.beans.DepartamentoFacade ejbFacade) {
-        this.ejbFacade = ejbFacade;
-    }
-
     
-
-
     public Departamento getSelectBuscar() {
         return selectBuscar;
     }
@@ -229,6 +219,10 @@ public class DepartamentoController implements Serializable {
 
     public void setIdBuscar(Integer idBuscar) {
         this.idBuscar = idBuscar;
+    }
+
+    public void setItemsBuscados(List<Departamento> itemsBuscados) {
+        this.itemsBuscados = itemsBuscados;
     }
 
     
