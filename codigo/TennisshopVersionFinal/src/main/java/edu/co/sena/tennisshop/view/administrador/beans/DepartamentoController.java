@@ -21,7 +21,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
 
 @Named("departamentoController")
-@ViewScoped
+@SessionScoped
 public class DepartamentoController implements Serializable {
 
     @EJB
@@ -30,9 +30,12 @@ public class DepartamentoController implements Serializable {
     private List<Departamento> itemsBuscados = null;
     private Departamento selected;
     private Departamento selectBuscar;
+    
     private Integer idBuscar;
     private String nombreBuscar;
+   
 
+    
     public DepartamentoController() {
     }
 
@@ -101,7 +104,7 @@ public class DepartamentoController implements Serializable {
         }
         return items;
     }
-public List<Departamento> buscarPorId() {
+      public List<Departamento> buscarPorId() {
         itemsBuscados = getFacade().finById(idBuscar);
         nombreBuscar = null;
         items = null;
@@ -114,6 +117,8 @@ public List<Departamento> buscarPorId() {
         idBuscar = null;
         return itemsBuscados;
     }
+    
+    
     
     public List<Departamento> getItemsBuscados() {
 
@@ -197,13 +202,8 @@ public List<Departamento> buscarPorId() {
         this.ejbFacade = ejbFacade;
     }
 
-    public int getIdbuscar() {
-        return idBuscar;
-    }
+    
 
-    public void setIdbuscar(Integer idbuscar) {
-        this.idBuscar = idbuscar;
-    }
 
     public Departamento getSelectBuscar() {
         return selectBuscar;
@@ -212,6 +212,28 @@ public List<Departamento> buscarPorId() {
     public void setSelectBuscar(Departamento selectBuscar) {
         this.selectBuscar = selectBuscar;
     }
+
+   
+
+    public String getNombreBuscar() {
+        return nombreBuscar;
+    }
+
+    public void setNombreBuscar(String nombreBuscar) {
+        this.nombreBuscar = nombreBuscar;
+    }
+
+    public Integer getIdBuscar() {
+        return idBuscar;
+    }
+
+    public void setIdBuscar(Integer idBuscar) {
+        this.idBuscar = idBuscar;
+    }
+
+    
+
+   
 
     @FacesConverter(forClass = Departamento.class)
     public static class DepartamentoControllerConverter implements Converter {
