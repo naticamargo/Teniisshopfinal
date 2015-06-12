@@ -29,6 +29,12 @@ public class DepartamentoFacade extends AbstractFacade<Departamento> {
     public DepartamentoFacade() {
         super(Departamento.class);
     }
+    @Override
+    public List<Departamento> findAll() {
+        Query queryJPQL = getEntityManager().createNamedQuery("Departamento.findAll");
+        return queryJPQL.getResultList();
+    }
+        
      public List<Departamento> finById(Object id){
      Query queryJPOL =getEntityManager().createNamedQuery("Departamento.findByIdDEPARTAMENTO");
      queryJPOL.setParameter("idDEPARTAMENTO", id);
