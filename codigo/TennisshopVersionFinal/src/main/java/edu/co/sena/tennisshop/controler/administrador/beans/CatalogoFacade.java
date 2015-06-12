@@ -36,7 +36,7 @@ public class CatalogoFacade extends AbstractFacade<Catalogo> {
     }
 
     public List<Catalogo> findByNombre(String nombreProBuscar) {
-        String sqlQuery = "SELECT * FROM catlogo pro where pro.NOMBRE like '%" + nombreProBuscar + "%';";
+        String sqlQuery = "SELECT * FROM tennisshop.catalogo pro where pro.NOMBRE like '%" + nombreProBuscar + "%';";
         Query query2 = getEntityManager().createNativeQuery(sqlQuery, Catalogo.class);
         return query2.getResultList();
     }
