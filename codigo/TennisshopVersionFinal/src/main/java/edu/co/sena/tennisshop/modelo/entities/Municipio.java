@@ -114,7 +114,7 @@ public class Municipio implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.co.sena.tennisshop.modelo.entities.Municipio[ idMUNICIPIO=" + idMUNICIPIO + " ]";
+      return nombreMunicipio;
     }
     
 }
